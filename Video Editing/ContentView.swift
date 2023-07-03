@@ -6,16 +6,35 @@
 //
 
 import SwiftUI
+import AVKit
+
 
 struct ContentView: View {
+    
+    @State private var image:UIImage = UIImage(named: "faces")!
+    
+    @ObservedObject var faceDetector = DetectFaces()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        VStack{
+            Spacer()
+            if faceDetector.outputImage != nil{
+                Image(uiImage: faceDetector.outputImage!)
+                    .resizable()
+                    .scaledToFit()
+            }else{
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+            }
+            Spacer()
+            Button("Process"){
+                faceDetector.image = image
+                faceDetector.detectFaces(in: image)
+            }
+            .buttonStyle(.borderedProminent)
         }
-        .padding()
+        
+        
     }
 }
 
