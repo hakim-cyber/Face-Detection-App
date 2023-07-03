@@ -29,6 +29,7 @@ class DetectFaces:ObservableObject{
         #if targetEnvironment(simulator)
         request.usesCPUOnly = true
         #endif
+    
         let handler = VNImageRequestHandler(ciImage: ciimage,options: [:])
         
         do{
@@ -73,11 +74,12 @@ class DetectFaces:ObservableObject{
         image.draw(at: .zero)
         
         let context = UIGraphicsGetCurrentContext()
-        context?.setStrokeColor(UIColor.blue.cgColor)
-        context?.setLineWidth(100.0)
-        context?.stroke(CGRect(x: normalizedRect.origin.x * imageSize.width
-                               , y: normalizedRect.origin.y * imageSize.height
-                               , width: normalizedRect.size.width * imageSize.width, height:  normalizedRect.size.height * imageSize.height))
+        context?.setFillColor(UIColor.systemGray4.cgColor)
+        context?.fill(CGRect(x: normalizedRect.origin.x * imageSize.width
+                             , y: normalizedRect.origin.y * imageSize.height
+                             , width: normalizedRect.size.width * imageSize.width
+                             , height:  normalizedRect.size.height * imageSize.height))
+        
         
         image = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
